@@ -1,0 +1,46 @@
+<%- model_class = ToUseCreditCard -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:number) %></th>
+      <th><%= model_class.human_attribute_name(:expiration_month) %></th>
+      <th><%= model_class.human_attribute_name(:expiration_year) %></th>
+      <th><%= model_class.human_attribute_name(:security_code) %></th>
+      <th><%= model_class.human_attribute_name(:holder) %></th>
+      <th><%= model_class.human_attribute_name(:amount) %></th>
+      <th><%= model_class.human_attribute_name(:load_file) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @to_use_credit_cards.each do |to_use_credit_card| %>
+      <tr>
+        <td><%= to_use_credit_card.number %></td>
+        <td><%= to_use_credit_card.expiration_month %></td>
+        <td><%= to_use_credit_card.expiration_year %></td>
+        <td><%= to_use_credit_card.security_code %></td>
+        <td><%= to_use_credit_card.holder %></td>
+        <td><%= to_use_credit_card.amount %></td>
+        <td><%= to_use_credit_card.load_file %></td>
+        <td><%l to_use_credit_card.created_at %></td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_to_use_credit_card_path(to_use_credit_card), :class => 'btn btn-default btn-xs' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      to_use_credit_card_path(to_use_credit_card),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-xs btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_to_use_credit_card_path,
+            :class => 'btn btn-primary' %>

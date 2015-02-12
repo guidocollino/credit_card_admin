@@ -1,0 +1,14 @@
+es:
+  mongoid:
+    models:
+      to_use_credit_card: "Tarjeta de Crédito"
+    attributes:
+      to_use_credit_card:
+        number: "Número"
+        expiration_month: "Venc. Mes"
+        expiration_year: "Venc. Año"
+        holder: "Titular"
+        security_code: "Cod. Seguridad"
+        amount: "Monto"
+        created_at: "Creada"
+        load_file: "Nro File de carga"
