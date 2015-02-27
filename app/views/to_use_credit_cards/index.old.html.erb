@@ -1,0 +1,55 @@
+<%- model_class = ToUseCreditCard -%>
+<div class="page-header">
+  <h3><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h3>
+</div>
+<table class="table table-striped datatable">
+  <thead>
+    <tr>
+      <th colspan="2"><%= model_class.human_attribute_name(:number) %>/<%= model_class.human_attribute_name(:security_code) %></th>
+      <th colspan="2">Venc</th>
+      <th><%= model_class.human_attribute_name(:holder) %></th>
+      <th><%= model_class.human_attribute_name(:bank) %></th>
+      <th><%= model_class.human_attribute_name(:credit_card) %></th>
+      <th><%= model_class.human_attribute_name(:amount) %></th>
+      <th><%= model_class.human_attribute_name(:load_file) %></th>
+      <th><%= model_class.human_attribute_name(:creator_name) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @to_use_credit_cards.each do |to_use_credit_card| %>
+      <tr>
+        <td><%= to_use_credit_card.number %></td>
+        <td><%= to_use_credit_card.security_code %></td>
+        <td><%= to_use_credit_card.expiration_month %></td>
+        <td><%= to_use_credit_card.expiration_year %></td>
+        <td><%= to_use_credit_card.holder %></td>
+        <td><%= to_use_credit_card.bank.name %></td>
+        <td><%= to_use_credit_card.credit_card.name %></td>
+        <td><%= to_use_credit_card.amount %></td>
+        <td><%= to_use_credit_card.load_file %></td>
+        <td><%= to_use_credit_card.creator_name %></td>
+        <td>
+          <div class="btn-group" role="group" aria-label="...">
+          <%= link_to t('.free', :default => t("helpers.links.free")),
+                      { controller: "to_use_credit_cards", action: "free_credit_card", id: to_use_credit_card.id }, :class => 'btn btn-primary btn-xs' if to_use_credit_card.blocked? and !to_use_credit_card.used? %>
+
+          <%= link_to t('.use', :default => t("helpers.links.use")),
+                      nil, :class => 'btn btn-success btn-xs', :id => "button-use", "data-card" => to_use_credit_card.id, :remote => true, "data-toggle" => "modal", "data-target" => "#myModal" if to_use_credit_card.blocked? and !to_use_credit_card.used? %>
+
+          <%= link_to t('.take', :default => t("helpers.links.take")),
+                      { controller: "to_use_credit_cards", action: "take_credit_card", id: to_use_credit_card.id }, :class => 'btn btn-primary btn-xs' unless to_use_credit_card.blocked? %>
+
+          <%= link_to t('.edit', :default => t("helpers.links.edit")), edit_to_use_credit_card_path(to_use_credit_card), :class => 'btn btn-default btn-xs' unless to_use_credit_card.blocked? %>
+
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      to_use_credit_card_path(to_use_credit_card),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-xs btn-danger' unless to_use_credit_card.blocked? %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

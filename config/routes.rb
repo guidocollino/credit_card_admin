@@ -1,5 +1,19 @@
 Rails.application.routes.draw do
-  resources :to_use_credit_cards
+  resources :agencies    , only: [:show, :index] # JSON Agencies for SELECT2
+
+  resources :to_use_credit_cards do
+    collection do
+      get :taked_credit_cards
+      get :used_credit_cards
+      get :disabled_credit_cards
+      post :use_credit_card
+    end
+  end
+
+  root 'to_use_credit_cards#index'
+  get ':controller/:action(/:id)'
+
+  get '/logout' => 'application#logout'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

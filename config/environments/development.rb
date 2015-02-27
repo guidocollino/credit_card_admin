@@ -35,3 +35,12 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 end
+
+# Basic CAS client configuration
+
+require 'casclient'
+require 'casclient/frameworks/rails/filter'
+
+CASClient::Frameworks::Rails::Filter.configure(
+  :cas_base_url => "http://localhost:8088"
+)

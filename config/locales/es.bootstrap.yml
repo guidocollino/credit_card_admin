@@ -10,6 +10,13 @@ es:
       confirm: "Estás seguro?"
       destroy: "Borrar"
       new: "Nuevo"
+      take: "Tomar"
+      free: "Liberar"
+      edit: "Editar"
+      use: "Usar"
+      reuse: "Reusar"
+      disable: "Deshabilitar"
+      enable: "Habilitar"
     titles:
       edit: "Editar"
       save: "Guardar"

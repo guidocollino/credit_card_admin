@@ -76,3 +76,13 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 end
+
+# Basic CAS client configuration
+
+require 'casclient'
+require 'casclient/frameworks/rails/filter'
+
+CASClient::Frameworks::Rails::Filter.configure(
+  :cas_base_url => "http://login.aero.tur.ar"
+)
+

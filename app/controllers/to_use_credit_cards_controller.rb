@@ -1,10 +1,17 @@
 class ToUseCreditCardsController < ApplicationController
-  before_action :set_to_use_credit_card, only: [:show, :edit, :update, :destroy]
+  before_action :set_to_use_credit_card, only: [:show, :edit, :update, :destroy, :use_credit_card, :take_credit_card, 
+                                                :free_credit_card, :use_form, :reuse_credit_card, :disable_credit_card,
+                                                :enable_credit_card]
+  before_action :set_banks_credit_cards_reasons, only: [:new, :edit]
 
   # GET /to_use_credit_cards
   # GET /to_use_credit_cards.json
   def index
-    @to_use_credit_cards = ToUseCreditCard.all
+    @credit_cards = ToUseCreditCard.to_use.only(:id, :expiration_month, :expiration_year, :amount, :bank_id, 
+      :credit_card_id, :quotes, :agency_id, :reason_id, :use_datas)
+    #@credit_cards = ToUseCreditCard.to_use
+    @credit_cards = @credit_cards.sort_by! { |card| [card.reason.priority , card.expiration_year,  card.expiration_month, card.cant_use_amount] }
+    @table_name = "to_use"
   end
 
   # GET /to_use_credit_cards/1
@@ -25,12 +32,14 @@ class ToUseCreditCardsController < ApplicationController
   # POST /to_use_credit_cards.json
   def create
     @to_use_credit_card = ToUseCreditCard.new(to_use_credit_card_params)
-
+    @to_use_credit_card.creator_id = current_user.id
+    @to_use_credit_card.creator_name = current_user.name_and_surname
     respond_to do |format|
       if @to_use_credit_card.save
-        format.html { redirect_to @to_use_credit_card, notice: 'To use credit card was successfully created.' }
+        format.html { redirect_to to_use_credit_cards_url, notice: 'La tarjeta fue creada con éxito.' }
         format.json { render :show, status: :created, location: @to_use_credit_card }
       else
+        set_banks_credit_cards_reasons
         format.html { render :new }
         format.json { render json: @to_use_credit_card.errors, status: :unprocessable_entity }
       end
@@ -42,9 +51,10 @@ class ToUseCreditCardsController < ApplicationController
   def update
     respond_to do |format|
       if @to_use_credit_card.update(to_use_credit_card_params)
-        format.html { redirect_to @to_use_credit_card, notice: 'To use credit card was successfully updated.' }
+        format.html { redirect_to to_use_credit_cards_url, notice: 'La tarjeta fue actualizada con éxito.' }
         format.json { render :show, status: :ok, location: @to_use_credit_card }
       else
+        set_banks_credit_cards_reasons
         format.html { render :edit }
         format.json { render json: @to_use_credit_card.errors, status: :unprocessable_entity }
       end
@@ -56,9 +66,110 @@ class ToUseCreditCardsController < ApplicationController
   def destroy
     @to_use_credit_card.destroy
     respond_to do |format|
-      format.html { redirect_to to_use_credit_cards_url, notice: 'To use credit card was successfully destroyed.' }
+      format.html { redirect_to to_use_credit_cards_url, notice: 'La tarjeta fue borrada con éxito.' }
       format.json { head :no_content }
     end
+  end
+
+  def take_credit_card
+    respond_to do |format|
+      if @to_use_credit_card.blocked?
+        format.html { redirect_to to_use_credit_cards_url, notice: 'La tarjeta ya fue tomada' }
+        format.json { head :no_content }
+      else
+        @to_use_credit_card.take(current_user)
+        format.html { redirect_to taked_credit_cards_to_use_credit_cards_path, notice: 'La tarjeta se tomo para ser usada con éxito'  }
+        format.json { render :show, status: :ok, location: @to_use_credit_card }
+      end
+    end
+  end
+
+  def free_credit_card
+    respond_to do |format|
+      if @to_use_credit_card.blocked?
+        @to_use_credit_card.free
+        format.html { redirect_to to_use_credit_cards_url, notice: 'La tarjeta liberó con éxito'  }
+        format.json { render :show, status: :ok, location: @to_use_credit_card }
+      else
+        format.html { redirect_to taked_credit_cards_to_use_credit_cards_path notice: 'La tarjeta NO esta tomada' }
+        format.json { head :no_content }
+      end
+    end
+  end
+
+  def use_credit_card
+    respond_to do |format|
+      if @to_use_credit_card.blocked?
+        @to_use_credit_card.use(params[:used_file], params[:amount])
+        format.html { redirect_to used_credit_cards_to_use_credit_cards_path, notice: 'La tarjeta se uso con éxito'  }
+        format.json { render :show, status: :ok, location: @to_use_credit_card }
+      else
+        format.html { redirect_to @to_use_credit_card, notice: 'La tarjeta NO esta tomada' }
+        format.json { head :no_content }
+      end
+    end
+  end
+
+  def reuse_credit_card
+    respond_to do |format|
+      if @to_use_credit_card.used?
+        @to_use_credit_card.reuse
+        @to_use_credit_card.take(current_user)
+        format.html { redirect_to taked_credit_cards_to_use_credit_cards_path, notice: 'La tarjeta quedo en tomadas para se usada nuevamente'  }
+        format.json { render :show, status: :ok, location: @to_use_credit_card }
+      else
+        format.html { redirect_to @to_use_credit_card, notice: 'La tarjeta NO esta marcada como usada' }
+        format.json { head :no_content }
+      end
+    end
+  end
+
+  def disable_credit_card
+    respond_to do |format|
+        @to_use_credit_card.disable
+        @to_use_credit_card.take(current_user)
+        format.html { redirect_to disabled_credit_cards_to_use_credit_cards_path, notice: 'La tarjeta quedo deshabilitada'  }
+        format.json { render :show, status: :ok, location: @to_use_credit_card }
+    end
+  end
+
+  def enable_credit_card
+    respond_to do |format|
+      if @to_use_credit_card.disabled?
+        @to_use_credit_card.enable(current_user)
+        format.html { redirect_to taked_credit_cards_to_use_credit_cards_path, notice: 'La tarjeta quedo en tomadas para se usada nuevamente'  }
+        format.json { render :show, status: :ok, location: @to_use_credit_card }
+      else
+        format.html { redirect_to @to_use_credit_card, notice: 'La tarjeta NO deshabilitada' }
+        format.json { head :no_content }
+      end
+    end
+  end
+
+  #####################################################
+
+  def taked_credit_cards
+    @credit_cards = ToUseCreditCard.takeds(current_user.id)
+    @table_name = "taked"
+    render :index
+  end
+
+  def used_credit_cards
+    @credit_cards = ToUseCreditCard.useds
+    @table_name = "used"
+    render :index
+  end
+
+  def disabled_credit_cards
+    @credit_cards = ToUseCreditCard.disableds
+    @table_name = "disabled"
+    render :index
+  end
+
+  ######################################################
+
+  def use_form
+    render :layout => false
   end
 
   private
@@ -69,6 +180,14 @@ class ToUseCreditCardsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def to_use_credit_card_params
-      params.require(:to_use_credit_card).permit(:number, :expiration_month, :expiration_year, :security_code, :holder, :amount, :load_file, :blocked)
+      params.require(:to_use_credit_card).permit(:number, :expiration_month, :expiration_year, 
+        :security_code, :holder, :amount, :load_file, :blocked, :bank_id, :credit_card_id, :quotes, :agency_id,
+        :reason_id)
+    end
+
+    def set_banks_credit_cards_reasons
+      @banks = Bank.all.map { |bank| [bank.name, bank.id] }
+      @credit_cards = CreditCard.all.map { |credit_card| [credit_card.name, credit_card.id] }
+      @reasons = ReasonOfUse.all.map { |reason| [reason.name, reason.id] }
     end
 end

@@ -1,0 +1,37 @@
+<%- model_class = ToUseCreditCard -%>
+<table class="table table-striped datatable">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:number) %>/<%= model_class.human_attribute_name(:security_code) %></th>
+      <th>Venc</th>
+      <th><%= model_class.human_attribute_name(:holder) %></th>
+      <th><%= model_class.human_attribute_name(:bank) %></th>
+      <th><%= model_class.human_attribute_name(:credit_card) %></th>
+      <th><%= model_class.human_attribute_name(:amount) %></th>
+      <th><%= model_class.human_attribute_name(:load_file) %></th>
+      <th><%= model_class.human_attribute_name(:creator_name) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @credit_cards.each do |to_use_credit_card| %>
+      <tr>
+        <td><%= to_use_credit_card.complete_number_text %></td>
+        <td><%= to_use_credit_card.expiration_text %></td>
+        <td><%= to_use_credit_card.holder %></td>
+        <td><%= to_use_credit_card.bank.name %></td>
+        <td><%= to_use_credit_card.credit_card.name %></td>
+        <td><%= number_with_precision(to_use_credit_card.amount, precision: 2, separator: ',', strip_insignificant_zeros: true, delimiter: '.') %></td>
+        <td><%= to_use_credit_card.load_file %></td>
+        <td><%= to_use_credit_card.creator_name %></td>
+        <td>
+          <div class="btn-group" role="group" aria-label="...">
+          <%= link_to t('.enable', :default => t("helpers.links.enable")),
+                      { controller: "to_use_credit_cards", action: "enable_credit_card", id: to_use_credit_card.id }, :class => 'btn btn-primary btn-xs' %>
+
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

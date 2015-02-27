@@ -1,0 +1,53 @@
+<%= form_tag('/to_use_credit_cards/use_credit_card', :html => { :class => "form-horizontal to_use_credit_card" }) do %>
+
+    <% if @to_use_credit_card.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@to_use_credit_card.errors.count, "error") %> prohibited this to_use_credit_card from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @to_use_credit_card.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <%= hidden_field_tag :id, @to_use_credit_card.id %>
+
+
+  <div class="control-group row">
+    <div class="col-md-3">
+      <%= label_tag "File donde se uso" %>
+    </div>
+    <div class="col-md-3">
+    	<div class="controls">
+        <%= text_field_tag :used_file,nil, :class => 'form-control' %>
+      </div>
+    </div>
+    <div class="col-md-6"></div>
+  </div>
+
+  <div class="control-group row">
+    <div class="col-md-3">
+      <%= label_tag "Monto a usar" %>
+    </div>
+    <div class="col-md-3">
+      <div class="controls">
+        <%= text_field_tag :amount,@to_use_credit_card.cant_use_amount, :class => 'form-control' %>
+      </div>
+    </div>
+    <div class="col-md-6"></div>
+  </div>
+
+<div class="row top7">
+  <div class="col-md-12">
+    <%= submit_tag "Aceptar", :class => 'btn btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            nil, :class => 'btn btn-default', "data-dismiss" => "modal", "aria-label" => "Close"  %>
+  </div>
+</div>
+
+<% end %>

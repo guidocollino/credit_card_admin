@@ -1,7 +1,7 @@
 es:
   mongoid:
     models:
-      to_use_credit_card: "Tarjeta de Crédito"
+      to_use_credit_card: "Tarjetas de Crédito"
     attributes:
       to_use_credit_card:
         number: "Número"
@@ -10,5 +10,11 @@ es:
         holder: "Titular"
         security_code: "Cod. Seguridad"
         amount: "Monto"
+        quotes: "Coutas"
         created_at: "Creada"
-        load_file: "Nro File de carga"
+        load_file: "File de carga"
+        agency: "Agencia"
+        bank: "Banco"
+        credit_card: "Tarjeta"
+        creator_name: "Creador"
+        reason: "Razón"
