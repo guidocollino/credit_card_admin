@@ -16,17 +16,25 @@
 //= require dataTables/jquery.dataTables
 //= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
 //= require twitter/bootstrap
+//= require notify
 //= require spin.min
 //= require select2
 //= require select2_locale_es
+//= require jquery.maskedinput
 //= require turbolinks
 //= require_tree .
 
 $(document).ready(function() {
-		// Setup - add a text input to each footer cell
+	$(".datemask").mask("99/99/9999",{placeholder:"dd/mm/yyyy"});
+
+
     initialize_select2_agency();
+
     var table = $('.datatable').DataTable(
-    	{	ordering: false,
+    	{	pageLength: 50,
+    		info: false,
+    		lengthChange: false,
+    		ordering: false,
     		language: 
     			{
 				    "sProcessing":     "Procesando...",

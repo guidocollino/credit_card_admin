@@ -42,5 +42,5 @@ require 'casclient'
 require 'casclient/frameworks/rails/filter'
 
 CASClient::Frameworks::Rails::Filter.configure(
-  :cas_base_url => "http://localhost:8088"
+  :cas_base_url => "http://10.0.0.70:8088"
 )

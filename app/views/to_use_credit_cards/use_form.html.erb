@@ -1,4 +1,4 @@
-<%= form_tag('/to_use_credit_cards/use_credit_card', :html => { :class => "form-horizontal to_use_credit_card" }) do %>
+<%= form_tag('/to_use_credit_cards/use_credit_card', :html => { :class => "form-horizontal to_use_credit_card" }, :remote => true) do %>
 
     <% if @to_use_credit_card.errors.any? %>
     <div id="error_expl" class="panel panel-danger">
@@ -36,15 +36,22 @@
     </div>
     <div class="col-md-3">
       <div class="controls">
-        <%= text_field_tag :amount,@to_use_credit_card.cant_use_amount, :class => 'form-control' %>
+        <%= text_field_tag :amount,@to_use_credit_card.cant_use_amount, { class: 'form-control', readonly: !@to_use_credit_card.allows_partial_use? } %>
       </div>
     </div>
-    <div class="col-md-6"></div>
+    <div class="col-md-6">
+      <% if @to_use_credit_card.allows_partial_use? %>
+        <span id="helpBlock" class="help-block inline">El máximo permitido es de <%= number_with_precision(@to_use_credit_card.cant_use_amount, precision: 2, separator: ',', strip_insignificant_zeros: true, delimiter: '.') %></span>
+      <% else %>
+        <span id="helpBlock" class="help-block inline">Solo permite el uso total <%= number_with_precision(@to_use_credit_card.cant_use_amount, precision: 2, separator: ',', strip_insignificant_zeros: true, delimiter: '.') %></span>
+      <% end %>
+    </div>
   </div>
 
 <div class="row top7">
   <div class="col-md-12">
-    <%= submit_tag "Aceptar", :class => 'btn btn-primary' %>
+
+    <%= submit_tag "Aceptar", data: { disable_with: "Enviando..." }, class: 'btn btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
             nil, :class => 'btn btn-default', "data-dismiss" => "modal", "aria-label" => "Close"  %>
   </div>

@@ -1,5 +1,5 @@
 <%- model_class = ToUseCreditCard -%>
-<table class="table table-striped datatable">
+<table class="table table-striped table-condensed datatable">
   <thead>
     <tr class="filter">
       <th></th>
@@ -18,6 +18,7 @@
       <th><%= model_class.human_attribute_name(:quotes) %></th>
       <th><%= model_class.human_attribute_name(:agency) %></th>
       <th><%= model_class.human_attribute_name(:reason) %></th>
+      <th><%= model_class.human_attribute_name(:date_limit) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
@@ -31,6 +32,15 @@
         <td><%= to_use_credit_card.quotes %></td>
         <td><%= to_use_credit_card.agency_name %></td>
         <td><%= to_use_credit_card.reason.name %></td>
+        <td>
+          <% unless to_use_credit_card.date_limit.blank? %>
+              <% if to_use_credit_card.overcome? then %>
+                <span class="label label-danger"><%= to_use_credit_card.date_limit %></span>
+              <% else %>
+                <span class="label label-info"><%= to_use_credit_card.date_limit %></span>
+              <% end %>
+          <% end %>
+        </td>
         <td>
           <div class="btn-group" role="group" aria-label="...">
 

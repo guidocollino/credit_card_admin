@@ -19,7 +19,7 @@ Tabulous.setup do
     end
 
     used_credit_cards_tab do
-      text          { 'Usadas' }
+      text          { 'Usos' }
       link_path     { used_credit_cards_to_use_credit_cards_path }
       visible_when  { true }
       enabled_when  { true }

@@ -8,7 +8,7 @@ class ToUseCreditCardsController < ApplicationController
   # GET /to_use_credit_cards.json
   def index
     @credit_cards = ToUseCreditCard.to_use.only(:id, :expiration_month, :expiration_year, :amount, :bank_id, 
-      :credit_card_id, :quotes, :agency_id, :reason_id, :use_datas)
+      :credit_card_id, :quotes, :agency_id, :reason_id, :use_datas, :date_limit)
     #@credit_cards = ToUseCreditCard.to_use
     @credit_cards = @credit_cards.sort_by! { |card| [card.reason.priority , card.expiration_year,  card.expiration_month, card.cant_use_amount] }
     @table_name = "to_use"
@@ -74,7 +74,7 @@ class ToUseCreditCardsController < ApplicationController
   def take_credit_card
     respond_to do |format|
       if @to_use_credit_card.blocked?
-        format.html { redirect_to to_use_credit_cards_url, notice: 'La tarjeta ya fue tomada' }
+        format.html { redirect_to to_use_credit_cards_url, alert: 'La tarjeta ya fue tomada' }
         format.json { head :no_content }
       else
         @to_use_credit_card.take(current_user)
@@ -91,7 +91,7 @@ class ToUseCreditCardsController < ApplicationController
         format.html { redirect_to to_use_credit_cards_url, notice: 'La tarjeta liberó con éxito'  }
         format.json { render :show, status: :ok, location: @to_use_credit_card }
       else
-        format.html { redirect_to taked_credit_cards_to_use_credit_cards_path notice: 'La tarjeta NO esta tomada' }
+        format.html { redirect_to taked_credit_cards_to_use_credit_cards_path alert: 'La tarjeta NO esta tomada' }
         format.json { head :no_content }
       end
     end
@@ -100,11 +100,22 @@ class ToUseCreditCardsController < ApplicationController
   def use_credit_card
     respond_to do |format|
       if @to_use_credit_card.blocked?
-        @to_use_credit_card.use(params[:used_file], params[:amount])
-        format.html { redirect_to used_credit_cards_to_use_credit_cards_path, notice: 'La tarjeta se uso con éxito'  }
-        format.json { render :show, status: :ok, location: @to_use_credit_card }
+        if @to_use_credit_card.valid_use(params[:used_file], params[:amount])
+          @to_use_credit_card.use(params[:used_file], params[:amount], current_user)
+          format.html { redirect_to used_credit_cards_to_use_credit_cards_path, notice: 'La tarjeta se uso con éxito'  }
+          format.json { render :show, status: :ok, location: @to_use_credit_card }
+          format.js   { 
+            flash[:notice] = "La tarjeta se uso con éxito" 
+            render js: "window.location = '/to_use_credit_cards/taked_credit_cards';"
+            #render js: "$('#myModal').modal('hide');"
+            
+          }
+        else
+          format.json { render :json => { :errors => @to_use_credit_card.errors }, :status => 409 }
+          format.js   { render js: "alert('Se encontraron los siguientes errores #{@to_use_credit_card.print_errors}');"}
+        end
       else
-        format.html { redirect_to @to_use_credit_card, notice: 'La tarjeta NO esta tomada' }
+        format.html { redirect_to @to_use_credit_card, alert: 'La tarjeta NO esta tomada' }
         format.json { head :no_content }
       end
     end
@@ -112,13 +123,12 @@ class ToUseCreditCardsController < ApplicationController
 
   def reuse_credit_card
     respond_to do |format|
-      if @to_use_credit_card.used?
-        @to_use_credit_card.reuse
+      if @to_use_credit_card.reuse(params[:data_use_id])
         @to_use_credit_card.take(current_user)
-        format.html { redirect_to taked_credit_cards_to_use_credit_cards_path, notice: 'La tarjeta quedo en tomadas para se usada nuevamente'  }
+        format.html { redirect_to taked_credit_cards_to_use_credit_cards_path, notice: 'Quedo habilitado el monto que se marco para reusar'  }
         format.json { render :show, status: :ok, location: @to_use_credit_card }
       else
-        format.html { redirect_to @to_use_credit_card, notice: 'La tarjeta NO esta marcada como usada' }
+        format.html { redirect_to taked_credit_cards_to_use_credit_cards_path, alert: 'El monto ya se reuso' }
         format.json { head :no_content }
       end
     end
@@ -155,7 +165,7 @@ class ToUseCreditCardsController < ApplicationController
   end
 
   def used_credit_cards
-    @credit_cards = ToUseCreditCard.useds
+    @uses = ToUseCreditCard.all_uses
     @table_name = "used"
     render :index
   end
@@ -182,7 +192,7 @@ class ToUseCreditCardsController < ApplicationController
     def to_use_credit_card_params
       params.require(:to_use_credit_card).permit(:number, :expiration_month, :expiration_year, 
         :security_code, :holder, :amount, :load_file, :blocked, :bank_id, :credit_card_id, :quotes, :agency_id,
-        :reason_id)
+        :reason_id, :date_limit, :allows_partial_use)
     end
 
     def set_banks_credit_cards_reasons

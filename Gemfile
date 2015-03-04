@@ -12,6 +12,7 @@ end
 #gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
 gem 'twitter-bootstrap-rails'
 gem 'select2-rails'
+#gem 'bootstrap-datepicker-rails'
 
 gem 'mongoid'
 gem 'mongoid-tree', '~> 2.0.0'

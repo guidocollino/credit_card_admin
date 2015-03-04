@@ -19,6 +19,9 @@
     </div>
   <% end %>
 
+  <fieldset class="scheduler-border">
+    <legend class="scheduler-border">Datos de la Tarjeta</legend>
+
   <div class="control-group row">
     <div class="col-md-3">
       <%= f.label :number, :class => 'control-label' %>
@@ -76,6 +79,11 @@
     <div class="col-md-8"></div>
   </div>
 
+</fieldset>
+<fieldset class="scheduler-border">
+    <legend class="scheduler-border">Datos de Uso</legend>
+
+
   <div class="control-group row">
     <div class="col-md-2">
       <%= f.label :amount, :class => 'control-label' %>
@@ -114,6 +122,32 @@
 
     </div>
   </div>
+
+  <div class="control-group row">
+    <div class="col-md-2">
+      <%= f.label :date_limit, :class => 'control-label' %>
+       <div class="form-group">
+          <div class='input-group date'>
+            <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+            <%= f.text_field :date_limit, :class => 'form-control datemask' %>
+          </div>
+        </div>
+      <%= error_span(@to_use_credit_card[:date_limit]) %>
+    </div>
+
+    <div class="col-md-5">
+      <%= f.label "Uso del monto", :class => 'control-label' %>
+        <div class="controls inline">
+            <%# f.check_box(:allows_partial_use , {}, checked_value = "true", unchecked_value = "false") %>
+            <%= f.radio_button(:allows_partial_use, "false") %> Solo total
+            <%= f.radio_button(:allows_partial_use, "true") %> Permite uso parcial del monto
+        </div>
+        <%= error_span(@to_use_credit_card[:allows_partial_use]) %>
+      </div>
+    <div class="col-md-5"></div>
+  </div>
+
+</fieldset>
 
 <div class="row top10">
   <div class="col-md-4">

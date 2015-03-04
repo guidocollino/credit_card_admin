@@ -23,3 +23,22 @@
 	background-color: #d9534f !important;
 	display: inherit !important; 
 }
+
+/*
+Checkboxes in inline forms are misaligned because for an unknow reason they inherit a height of 40px !
+This selector limit the height of inline checkboxes to 12px which is the perfect value to align them to
+the other widgets in an inline form.
+*/
+.radio-inline, .checkbox-inline {
+	padding-top: 10% !important;
+    max-height: 0px;
+}
+
+.form-horizontal .form-group {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
+.label {
+  font-size: 100% !important;
+}
