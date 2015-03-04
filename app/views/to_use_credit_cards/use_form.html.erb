@@ -17,6 +17,52 @@
 
   <%= hidden_field_tag :id, @to_use_credit_card.id %>
 
+  <div class="control-group row">
+    <div class="col-md-3">
+      <label class="control-label">Número</label>
+    </div>
+    <div class="col-md-3">
+       <p class="form-control-static"><%= @to_use_credit_card.number %></p>
+    </div>
+    <div class="col-md-2">
+      <label class="control-label">Cod.seg</label>
+    </div>
+    <div class="col-md-1">
+       <p class="form-control-static"><%= @to_use_credit_card.security_code %></p>
+    </div>
+    <div class="col-md-1">
+      <label class="control-label">Venc</label>
+    </div>
+    <div class="col-md-2">
+       <p class="form-control-static"><%= @to_use_credit_card.expiration_text %></p>
+    </div>
+  </div>
+
+  <div class="control-group row">
+    <div class="col-md-3">
+      <label class="control-label">Titular</label>
+    </div>
+    <div class="col-md-7">
+       <p class="form-control-static"><%= @to_use_credit_card.holder %></p>
+    </div>
+    <div class="col-md-2"></div>
+  </div>
+
+  <div class="control-group row">
+    <div class="col-md-3">
+      <label class="control-label">Banco</label>
+    </div>
+    <div class="col-md-3">
+       <p class="form-control-static"><%= @to_use_credit_card.bank.name %></p>
+    </div>
+    <div class="col-md-2">
+      <label class="control-label">Tarjeta</label>
+    </div>
+    <div class="col-md-4">
+       <p class="form-control-static"><%= @to_use_credit_card.credit_card.name %></p>
+    </div>
+  </div>
+
 
   <div class="control-group row">
     <div class="col-md-3">

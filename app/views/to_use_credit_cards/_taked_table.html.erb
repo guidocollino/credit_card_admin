@@ -8,8 +8,8 @@
       <th><%= model_class.human_attribute_name(:bank) %></th>
       <th><%= model_class.human_attribute_name(:credit_card) %></th>
       <th><%= model_class.human_attribute_name(:amount) %></th>
-      <th><%= model_class.human_attribute_name(:load_file) %></th>
-      <th><%= model_class.human_attribute_name(:creator_name) %></th>
+      <th><%= model_class.human_attribute_name(:quotes) %></th>
+      <th><%= model_class.human_attribute_name(:load_file) %></th>      
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
@@ -22,8 +22,8 @@
         <td><%= to_use_credit_card.bank.name %></td>
         <td><%= to_use_credit_card.credit_card.name %></td>
         <td><%= number_with_precision(to_use_credit_card.cant_use_amount, precision: 2, separator: ',', strip_insignificant_zeros: true, delimiter: '.') %></td>
+        <td><%= to_use_credit_card.quotes %></td>
         <td><%= to_use_credit_card.load_file %></td>
-        <td><%= to_use_credit_card.creator_name %></td>
         <td>
           <div class="btn-group" role="group" aria-label="...">
           <%= link_to t('.free', :default => t("helpers.links.free")),

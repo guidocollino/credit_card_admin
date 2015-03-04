@@ -106,7 +106,7 @@ class ToUseCreditCardsController < ApplicationController
           format.json { render :show, status: :ok, location: @to_use_credit_card }
           format.js   { 
             flash[:notice] = "La tarjeta se uso con éxito" 
-            render js: "window.location = '/to_use_credit_cards/taked_credit_cards';"
+            render js: "$('#myModal').modal('hide');window.location = '/to_use_credit_cards/taked_credit_cards';"
             #render js: "$('#myModal').modal('hide');"
             
           }
