@@ -1,5 +1,5 @@
 class ToUseCreditCardsController < ApplicationController
-  before_action :set_to_use_credit_card, only: [:show, :edit, :update, :destroy, :use_credit_card, :take_credit_card, 
+  before_action :set_to_use_credit_card, only: [:show, :edit, :update, :destroy, :use_credit_card, :take_credit_card,
                                                 :free_credit_card, :use_form, :reuse_credit_card, :disable_credit_card,
                                                 :enable_credit_card]
   before_action :set_banks_credit_cards_reasons, only: [:new, :edit]
@@ -7,7 +7,7 @@ class ToUseCreditCardsController < ApplicationController
   # GET /to_use_credit_cards
   # GET /to_use_credit_cards.json
   def index
-    @credit_cards = ToUseCreditCard.to_use.only(:id, :expiration_month, :expiration_year, :amount, :bank_id, 
+    @credit_cards = ToUseCreditCard.to_use.only(:id, :expiration_month, :expiration_year, :amount, :bank_id,
       :credit_card_id, :quotes, :agency_id, :reason_id, :use_datas, :date_limit)
     #@credit_cards = ToUseCreditCard.to_use
     @credit_cards = @credit_cards.sort_by! { |card| [card.reason.priority , card.expiration_year,  card.expiration_month, card.cant_use_amount] }
@@ -22,6 +22,7 @@ class ToUseCreditCardsController < ApplicationController
   # GET /to_use_credit_cards/new
   def new
     @to_use_credit_card = ToUseCreditCard.new
+    @to_use_credit_card.date_limit = (Date.today + 1.month)
   end
 
   # GET /to_use_credit_cards/1/edit
@@ -104,11 +105,11 @@ class ToUseCreditCardsController < ApplicationController
           @to_use_credit_card.use(params[:used_file], params[:amount], current_user)
           format.html { redirect_to used_credit_cards_to_use_credit_cards_path, notice: 'La tarjeta se uso con éxito'  }
           format.json { render :show, status: :ok, location: @to_use_credit_card }
-          format.js   { 
-            flash[:notice] = "La tarjeta se uso con éxito" 
+          format.js   {
+            flash[:notice] = "La tarjeta se uso con éxito"
             render js: "$('#myModal').modal('hide');window.location = '/to_use_credit_cards/taked_credit_cards';"
             #render js: "$('#myModal').modal('hide');"
-            
+
           }
         else
           format.json { render :json => { :errors => @to_use_credit_card.errors }, :status => 409 }
@@ -190,7 +191,7 @@ class ToUseCreditCardsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def to_use_credit_card_params
-      params.require(:to_use_credit_card).permit(:number, :expiration_month, :expiration_year, 
+      params.require(:to_use_credit_card).permit(:number, :expiration_month, :expiration_year,
         :security_code, :holder, :amount, :load_file, :blocked, :bank_id, :credit_card_id, :quotes, :agency_id,
         :reason_id, :date_limit, :allows_partial_use)
     end
