@@ -147,6 +147,16 @@
     <div class="col-md-5"></div>
   </div>
 
+ <div class="control-group row">
+   <div class="col-md-12">
+      <%= f.label :clarification, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :clarification, :class => 'form-control' %>
+      </div>
+      <%= error_span(@to_use_credit_card[:clarification]) %>
+    </div>
+  </div>
+  
 </fieldset>
 
 <div class="row top10">

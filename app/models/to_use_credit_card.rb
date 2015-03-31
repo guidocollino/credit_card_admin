@@ -12,6 +12,7 @@ class ToUseCreditCard
   field :load_file, type: Integer
   field :date_limit, type: Date
   field :allows_partial_use, type: Boolean, default: false
+  field :clarification, type: String
 
 
   #flags
