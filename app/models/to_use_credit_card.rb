@@ -32,7 +32,7 @@ class ToUseCreditCard
   embeds_many :use_datas
 
   validates_presence_of :number, :expiration_month, :expiration_year,:security_code, :load_file, :holder, :amount,
-                         :bank, :credit_card, :quotes, :agency_id, :reason
+                         :bank, :credit_card, :quotes, :agency_id, :reason, :date_limit
   validates_numericality_of :number, :security_code, :load_file, only_integer: true
   validates_length_of :load_file, minimum: 6, maximum: 6
 
@@ -60,7 +60,7 @@ class ToUseCreditCard
     self.used = false
     self.disabled = false
     self.partial_used = false
-  end 
+  end
 
   def print_errors
     errors.full_messages.join(", ")
@@ -89,7 +89,7 @@ class ToUseCreditCard
     result = false
     unless date_limit.blank?
       week_after = Date.today + 7.days
-      result = date_limit <= week_after 
+      result = date_limit <= week_after
     end
     return result
   end
