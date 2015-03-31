@@ -10,13 +10,13 @@ Tabulous.setup do
       active_when   { in_action('index').of_controller('to_use_credit_cards') }
     end
 
-    taked_credit_cards_tab do
-      text          { 'Tomadas' }
-      link_path     { taked_credit_cards_to_use_credit_cards_path }
-      visible_when  { true }
-      enabled_when  { true }
-      active_when   { in_action('taked_credit_cards').of_controller('to_use_credit_cards') }
-    end
+    # taked_credit_cards_tab do
+    #   text          { 'Tomadas' }
+    #   link_path     { taked_credit_cards_to_use_credit_cards_path }
+    #   visible_when  { true }
+    #   enabled_when  { true }
+    #   active_when   { in_action('taked_credit_cards').of_controller('to_use_credit_cards') }
+    # end
 
     used_credit_cards_tab do
       text          { 'Usos' }

@@ -99,14 +99,14 @@ class ToUseCreditCardsController < ApplicationController
 
   def use_credit_card
     respond_to do |format|
-      if @to_use_credit_card.blocked?
+      #if @to_use_credit_card.blocked?
         if @to_use_credit_card.valid_use(params[:used_file], params[:amount])
-          @to_use_credit_card.use(params[:used_file], params[:amount], current_user)
-          format.html { redirect_to used_credit_cards_to_use_credit_cards_path, notice: 'La tarjeta se uso con éxito'  }
+          @to_use_credit_card.use(params[:amount], current_user, params[:used_file])
+          format.html { redirect_to to_use_credit_cards_url, notice: 'La tarjeta se uso con éxito'  }
           format.json { render :show, status: :ok, location: @to_use_credit_card }
           format.js   { 
             flash[:notice] = "La tarjeta se uso con éxito" 
-            render js: "$('#myModal').modal('hide');window.location = '/to_use_credit_cards/taked_credit_cards';"
+            render js: "$('#myModal').modal('hide');window.location = '/to_use_credit_cards/index';"
             #render js: "$('#myModal').modal('hide');"
             
           }
@@ -114,21 +114,21 @@ class ToUseCreditCardsController < ApplicationController
           format.json { render :json => { :errors => @to_use_credit_card.errors }, :status => 409 }
           format.js   { render js: "alert('Se encontraron los siguientes errores #{@to_use_credit_card.print_errors}');"}
         end
-      else
-        format.html { redirect_to @to_use_credit_card, alert: 'La tarjeta NO esta tomada' }
-        format.json { head :no_content }
-      end
+      #else
+      #  format.html { redirect_to @to_use_credit_card, alert: 'La tarjeta NO esta tomada' }
+      #  format.json { head :no_content }
+      #end
     end
   end
 
   def reuse_credit_card
     respond_to do |format|
       if @to_use_credit_card.reuse(params[:data_use_id])
-        @to_use_credit_card.take(current_user)
-        format.html { redirect_to taked_credit_cards_to_use_credit_cards_path, notice: 'Quedo habilitado el monto que se marco para reusar'  }
+        #@to_use_credit_card.take(current_user)
+        format.html { redirect_to to_use_credit_cards_url, notice: 'Quedo habilitado el monto que se marco para reusar'  }
         format.json { render :show, status: :ok, location: @to_use_credit_card }
       else
-        format.html { redirect_to taked_credit_cards_to_use_credit_cards_path, alert: 'El monto ya se reuso' }
+        format.html { redirect_to to_use_credit_cards_url, alert: 'El monto ya se reuso' }
         format.json { head :no_content }
       end
     end
@@ -147,7 +147,7 @@ class ToUseCreditCardsController < ApplicationController
     respond_to do |format|
       if @to_use_credit_card.disabled?
         @to_use_credit_card.enable(current_user)
-        format.html { redirect_to taked_credit_cards_to_use_credit_cards_path, notice: 'La tarjeta quedo en tomadas para se usada nuevamente'  }
+        format.html { redirect_to to_use_credit_cards_url, notice: 'La tarjeta quedo en tomadas para se usada nuevamente'  }
         format.json { render :show, status: :ok, location: @to_use_credit_card }
       else
         format.html { redirect_to @to_use_credit_card, notice: 'La tarjeta NO deshabilitada' }

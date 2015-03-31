@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  namespace :api do
+    namespace :v1 do
+      get 'admin_credit_cards/to_use_credit_cards'
+      post 'admin_credit_cards/use_credit_card'
+      get 'admin_credit_cards/cancel_use'
+    end
+  end
+
   resources :agencies    , only: [:show, :index] # JSON Agencies for SELECT2
 
   resources :to_use_credit_cards do

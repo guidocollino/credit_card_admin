@@ -14,6 +14,7 @@ class ToUseCreditCard
   field :allows_partial_use, type: Boolean, default: false
 
 
+  #flags
   field :blocked, type: Boolean, default: false
   field :partial_used, type: Boolean, default: false
   field :used, type: Boolean, default: false
@@ -47,6 +48,13 @@ class ToUseCreditCard
   #SINO MONGOID NO CARGA EL VALOR Y NO ANDAN BIEN LOS SCOPE
   after_create :initialize_flags
 
+  # def as_json(options={})
+  #   super(
+  #     {:include => [{ :bank => {:only => :name} , :reason => {:only => :name}}],
+  #     :methods => [:expiration_text, :cant_use_amount]}
+  #   )
+  # end
+
   def initialize_flags
     self.blocked = false
     self.used = false
@@ -72,6 +80,7 @@ class ToUseCreditCard
     "#{number}/#{security_code}"
   end
 
+  #MM/YY
   def expiration_text
     "0#{expiration_month}/#{expiration_year.last(2)}"
   end
@@ -85,6 +94,7 @@ class ToUseCreditCard
     return result
   end
 
+  #monto usado
   def used_amount
     total = 0
     self.use_datas.valids.each { |ud| total += ud.amount }
@@ -99,14 +109,19 @@ class ToUseCreditCard
 
   def valid_use(file,amount_to_use)
     valid = true
-    if amount_to_use.blank? || file.blank? then
-      errors.add(:base, "El file y el monto son obligatorios")
-      valid = false
+    if used? then
+       errors.add(:base, "La tarjeta ya fue usada")
+       valid = false
     else
-      valid_amount = cant_use_amount
-      if amount_to_use.to_f > valid_amount then
-        errors.add(:base, "El monto debe ser menor al que tiene para usar #{valid_amount}")
+      if amount_to_use.blank? then
+        errors.add(:base, "El monto es obligatorio")
         valid = false
+      else
+        valid_amount = cant_use_amount
+        if amount_to_use.to_f > valid_amount then
+          errors.add(:base, "El monto debe ser menor al que tiene para usar #{valid_amount}")
+          valid = false
+        end
       end
     end
     return valid
@@ -122,7 +137,7 @@ class ToUseCreditCard
     update_attributes(blocked: false, taker_id: nil)
   end
 
-  def use(file, amount_to_use, user_data, date = Date.today)
+  def use(amount_to_use, user_data, file = nil, date = Date.today)
     self.use_datas << UseData.new(amount: amount_to_use, used_file: file, user_id: user_data.id, user_name: user_data.name_and_surname)
     self.save
     unless used_amount < self.amount
@@ -136,7 +151,7 @@ class ToUseCreditCard
     use = (self.use_datas.valids).find(data_use_id)
     unless use.nil?
       use.update_attributes(cancel: true)
-      self.update_attributes(used: false, partial_used: (self.use_datas.valids.size > 0)) 
+      self.update_attributes(blocked: false,used: false, partial_used: (self.use_datas.valids.size > 0)) 
       return true
     end
     return false

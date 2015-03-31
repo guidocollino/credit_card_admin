@@ -5,6 +5,7 @@ group :test, :development do
   #gem 'rack-mini-profiler'
   gem 'better_errors'
   gem 'awesome_print'
+  gem 'byebug'
 end
 
 #gem 'database_cleaner', '~> 1.4.0'
@@ -72,4 +73,9 @@ gem 'unicorn-rails'
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+# Templete json
+gem 'rabl'
+# Also add either `oj` or `yajl-ruby` as the JSON parser
+gem 'oj'
 

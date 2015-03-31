@@ -44,8 +44,8 @@
         <td>
           <div class="btn-group" role="group" aria-label="...">
 
-          <%= link_to t('.take', :default => t("helpers.links.take")),
-                      { controller: "to_use_credit_cards", action: "take_credit_card", id: to_use_credit_card.id }, :class => 'btn btn-primary btn-xs' %>
+          <%= link_to t('.use', :default => t("helpers.links.use")),
+                      nil, :class => 'btn btn-success btn-xs button-use', "data-card" => to_use_credit_card.id, :remote => true, "data-toggle" => "modal", "data-target" => "#myModal" %>
 
           <%= link_to t('.edit', :default => t("helpers.links.edit")), edit_to_use_credit_card_path(to_use_credit_card), :class => 'btn btn-default btn-xs' %>
 
