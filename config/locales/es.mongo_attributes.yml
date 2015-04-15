@@ -10,7 +10,7 @@ es:
         holder: "Titular"
         security_code: "Cod. Seguridad"
         amount: "Monto"
-        quotes: "Coutas"
+        quotes: "Cuotas"
         created_at: "Creada"
         load_file: "File de carga"
         agency: "Agencia"

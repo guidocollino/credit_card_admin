@@ -39,7 +39,7 @@
         <%= error_span(@to_use_credit_card[:security_code]) %>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-3">
       <%= f.label :holder, :class => 'control-label' %>
       <div class="controls">
         <%= f.text_field :holder, :class => 'form-control' %>
@@ -47,7 +47,7 @@
       <%= error_span(@to_use_credit_card[:holder]) %>
     </div>
 
-    <div class="col-md-1">
+    <div class="col-md-2">
       <%= f.label :expiration_month, :class => 'control-label' %>
       <div class="controls">
         <%= f.select( "expiration_month", (1..12).collect {|m| [ m.to_s, m.to_s ] }, {include_blank: true}, { class: 'form-control'}) %>
@@ -92,7 +92,7 @@
       </div>
       <%= error_span(@to_use_credit_card[:amount]) %>
     </div>
-    <div class="col-md-1">
+    <div class="col-md-2">
       <%= f.label :quotes, :class => 'control-label' %>
       <div class="controls">
         <%= f.select( "quotes", (1..24).collect {|q| [ q.to_s, q.to_s ] }, {include_blank: true}, { class: 'form-control'}) %>
@@ -118,7 +118,7 @@
       <%= f.label :reason, :class => 'control-label' %>
       <%= select(:to_use_credit_card, :reason_id, @reasons, { include_blank: true }, :class => 'form-control') %>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-1">
 
     </div>
   </div>
