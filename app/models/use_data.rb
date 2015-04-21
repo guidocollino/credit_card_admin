@@ -16,7 +16,7 @@ class UseData
 
   embedded_in :to_use_credit_card
 
-  delegate :complete_number_text, :expiration_text, :holder, :bank, :credit_card, to: :to_use_credit_card, allow_nil: true
+  delegate :agency_name, :complete_number_text, :expiration_text, :holder, :bank, :credit_card, to: :to_use_credit_card, allow_nil: true
 
   #SINO MONGOID NO CARGA EL VALOR Y NO ANDAN BIEN LOS SCOPE
   after_create :initialize_flags

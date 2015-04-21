@@ -26,6 +26,14 @@ Tabulous.setup do
       active_when   { in_action('used_credit_cards').of_controller('to_use_credit_cards') }
     end
 
+    all_credit_cards_tab do
+      text          { 'Todas' }
+      link_path     { all_credit_cards_to_use_credit_cards_path }
+      visible_when  { true }
+      enabled_when  { true }
+      active_when   { in_action('all_credit_cards').of_controller('to_use_credit_cards') }
+    end
+
     disabled_credit_cards_tab do
       text          { 'Deshabilitadas' }
       link_path     { disabled_credit_cards_to_use_credit_cards_path }

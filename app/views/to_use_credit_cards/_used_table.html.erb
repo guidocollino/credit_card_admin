@@ -8,7 +8,7 @@
       <th><%= model_class.human_attribute_name(:bank) %></th>
       <th><%= model_class.human_attribute_name(:credit_card) %></th>
       <th>Usado</th>
-      <th>En File</th>
+      <th>Agencia</th>
       <th>Por</th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
@@ -23,7 +23,7 @@
         <td><%= use.bank.name %></td>
         <td><%= use.credit_card.name %></td>
         <td><%= use.descriptive_amount %></td>
-        <td><%= use.used_file %></td>
+        <td><%= use.agency_name %></td>
         <td><%= use.user_name %></td>
         <td>
           <div class="btn-group" role="group">

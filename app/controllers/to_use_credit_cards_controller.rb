@@ -169,6 +169,12 @@ class ToUseCreditCardsController < ApplicationController
     render :index
   end
 
+  def all_credit_cards
+    @credit_cards = ToUseCreditCard.all
+    @table_name = "all"
+    render :index
+  end
+
   def disabled_credit_cards
     @credit_cards = ToUseCreditCard.disableds
     @table_name = "disabled"

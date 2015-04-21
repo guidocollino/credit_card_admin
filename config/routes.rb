@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     collection do
       get :taked_credit_cards
       get :used_credit_cards
+      get :all_credit_cards
       get :disabled_credit_cards
       post :use_credit_card
     end

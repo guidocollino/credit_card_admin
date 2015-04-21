@@ -1,0 +1,35 @@
+<%- model_class = ToUseCreditCard -%>
+<table class="table table-striped table-condensed datatable">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:number) %>/<%= model_class.human_attribute_name(:security_code) %></th>
+      <th>Venc</th>
+      <th><%= model_class.human_attribute_name(:bank) %></th>
+      <th><%= model_class.human_attribute_name(:credit_card) %></th>
+      <th>File</th>
+      <th><%= model_class.human_attribute_name(:agency) %></th>
+      <th><%= model_class.human_attribute_name(:amount) %></th>
+      <th>Usado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @credit_cards.each do |to_use_credit_card| %>
+      <tr>
+        <td><%= to_use_credit_card.complete_number_text %></td>
+        <td><%= to_use_credit_card.expiration_text %></td>
+        <td><%= to_use_credit_card.bank.name %></td>
+        <td><%= to_use_credit_card.credit_card.name %></td>
+        <td><%= to_use_credit_card.load_file %></td>
+        <td><%= to_use_credit_card.agency_name %></td>
+        <td><%= number_with_precision(to_use_credit_card.amount, precision: 2, separator: ',', strip_insignificant_zeros: true, delimiter: '.') %></td>
+        <td>
+          <% if to_use_credit_card.used? then %>
+            <span class="label label-success">Todo</span>
+          <% elsif to_use_credit_card.partial_used? %>
+            <span class="label label-danger"><%= number_with_precision(to_use_credit_card.used_amount, precision: 2, separator: ',', strip_insignificant_zeros: true, delimiter: '.') %></span>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
