@@ -140,17 +140,21 @@ class ToUseCreditCard
   end
 
   def use(amount_to_use, user_data, es_sale_id = nil, file = nil, date = Date.today)
-    self.use_datas << UseData.new(amount: amount_to_use, 
+    use = UseData.new(amount: amount_to_use, 
                                   used_file: file, 
                                   user_id: user_data.id, 
                                   user_name: user_data.name_and_surname,
                                   es_sale_id: es_sale_id)
+    self.use_datas << use
     self.save
+
     unless used_amount < self.amount
       update_attributes(used: true)
     else
       update_attributes(partial_used: true)
     end
+    #Enviar notificacion si tiene mail/s cargado/s
+    NotificationUses.notify_use(use).deliver unless self.email.blank?
   end
 
   def reuse(data_use_id)

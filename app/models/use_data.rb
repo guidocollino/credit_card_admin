@@ -28,11 +28,11 @@ class UseData
   end 
 
   def descriptive_amount
-  	des_amount = number_with_precision(amount, precision: 2, separator: ',', strip_insignificant_zeros: true, delimiter: '.')
+  	des_amount = number_with_precision(amount, precision: 2, separator: '.', strip_insignificant_zeros: true)
   	if amount == self.to_use_credit_card.amount then
   		return des_amount
   	else
-  		total_des_amount = number_with_precision(self.to_use_credit_card.amount, precision: 2, separator: ',', strip_insignificant_zeros: true, delimiter: '.')
+  		total_des_amount = number_with_precision(self.to_use_credit_card.amount, precision: 2, separator: '.', strip_insignificant_zeros: true)
   		return "#{des_amount} de #{total_des_amount}"
     end
   end

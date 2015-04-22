@@ -21,12 +21,12 @@
         <td><%= to_use_credit_card.credit_card.name %></td>
         <td><%= to_use_credit_card.load_file %></td>
         <td><%= to_use_credit_card.agency_name %></td>
-        <td><%= number_with_precision(to_use_credit_card.amount, precision: 2, separator: ',', strip_insignificant_zeros: true, delimiter: '.') %></td>
+        <td><%= number_with_precision(to_use_credit_card.amount, precision: 2, separator: '.', strip_insignificant_zeros: true) %></td>
         <td>
           <% if to_use_credit_card.used? then %>
             <span class="label label-success">Todo</span>
           <% elsif to_use_credit_card.partial_used? %>
-            <span class="label label-danger"><%= number_with_precision(to_use_credit_card.used_amount, precision: 2, separator: ',', strip_insignificant_zeros: true, delimiter: '.') %></span>
+            <span class="label label-danger"><%= number_with_precision(to_use_credit_card.used_amount, precision: 2, separator: '.', strip_insignificant_zeros: true) %></span>
           <% end %>
         </td>
       </tr>

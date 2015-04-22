@@ -110,7 +110,7 @@ class ToUseCreditCardsController < ApplicationController
           format.json { render :show, status: :ok, location: @to_use_credit_card }
           format.js   { 
             flash[:notice] = "La tarjeta se uso con éxito" 
-            render js: "$('#myModal').modal('hide');window.location = '/to_use_credit_cards/index';"
+            render js: "$('#myModal').modal('hide');window.location = '/to_use_credit_cards';"
           }
         else
           format.json { render :json => { :errors => @to_use_credit_card.errors }, :status => 409 }
@@ -200,7 +200,7 @@ class ToUseCreditCardsController < ApplicationController
     def to_use_credit_card_params
       params.require(:to_use_credit_card).permit(:number, :expiration_month, :expiration_year,
         :security_code, :holder, :amount, :load_file, :blocked, :bank_id, :credit_card_id, :quotes, :agency_id,
-        :reason_id, :date_limit, :allows_partial_use, :clarification)
+        :reason_id, :date_limit, :allows_partial_use, :clarification, :email)
     end
 
     def set_banks_credit_cards_reasons

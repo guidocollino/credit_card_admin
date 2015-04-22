@@ -87,9 +87,9 @@
     </div>
     <div class="col-md-6">
       <% if @to_use_credit_card.allows_partial_use? %>
-        <span id="helpBlock" class="help-block inline">El máximo permitido es de <%= number_with_precision(@to_use_credit_card.cant_use_amount, precision: 2, separator: ',', strip_insignificant_zeros: true, delimiter: '.') %></span>
+        <span id="helpBlock" class="help-block inline">El máximo permitido es de <%= number_with_precision(@to_use_credit_card.cant_use_amount, precision: 2, separator: '.', strip_insignificant_zeros: true) %></span>
       <% else %>
-        <span id="helpBlock" class="help-block inline">Solo permite el uso total <%= number_with_precision(@to_use_credit_card.cant_use_amount, precision: 2, separator: ',', strip_insignificant_zeros: true, delimiter: '.') %></span>
+        <span id="helpBlock" class="help-block inline">Solo permite el uso total <%= number_with_precision(@to_use_credit_card.cant_use_amount, precision: 2, separator: '.', strip_insignificant_zeros: true) %></span>
       <% end %>
     </div>
   </div>

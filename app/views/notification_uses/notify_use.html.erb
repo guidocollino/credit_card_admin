@@ -1,0 +1,7 @@
+<p>Número/Cod. Seguridad: <%=  @credit_card.complete_number_text %></p>
+<p>Titular: <%= @credit_card.holder %></p>
+<p>Se uso: <%= number_with_precision(@use.amount, precision: 2, separator: '.', strip_insignificant_zeros: true)%></p>
+<p>Usado por: <%= @use.user_name %></p>
+<hr>
+<p>Monto total usado: <%= number_with_precision(@credit_card.used_amount, precision: 2, separator: '.', strip_insignificant_zeros: true) %></p>
+<p>Monto disponible: <%= number_with_precision(@credit_card.cant_use_amount, precision: 2, separator: '.', strip_insignificant_zeros: true) %></p>
