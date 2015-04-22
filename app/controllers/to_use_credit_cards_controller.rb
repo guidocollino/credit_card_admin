@@ -102,7 +102,10 @@ class ToUseCreditCardsController < ApplicationController
     respond_to do |format|
       #if @to_use_credit_card.blocked?
         if @to_use_credit_card.valid_use(params[:used_file], params[:amount])
-          @to_use_credit_card.use(params[:amount], current_user, params[:used_file])
+          @to_use_credit_card.use(params[:amount], 
+                                  current_user, 
+                                  nil,
+                                  params[:used_file])
           format.html { redirect_to to_use_credit_cards_url, notice: 'La tarjeta se uso con éxito'  }
           format.json { render :show, status: :ok, location: @to_use_credit_card }
           format.js   { 
@@ -190,7 +193,7 @@ class ToUseCreditCardsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_to_use_credit_card
-      @to_use_credit_card = ToUseCreditCard.find(params[:id])
+      @to_use_credit_card = ToUseCreditCard.find(params[:id]) if ToUseCreditCard.where(id: params[:id]).exists?
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

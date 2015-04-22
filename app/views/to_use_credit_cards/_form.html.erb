@@ -157,7 +157,17 @@
     </div>
   </div>
   
+  <div class="control-group row">
+   <div class="col-md-12">
+      <%= f.label :email, :class => 'control-label' %> (Avisa de los usos, separar por comas si se carga mas de uno)
+      <div class="controls">
+        <%= f.text_field :email, :class => 'form-control' %>
+      </div>
+      <%= error_span(@to_use_credit_card[:email]) %>
+    </div>
+  </div>
 </fieldset>
+
 
 <div class="row top10">
   <div class="col-md-4">

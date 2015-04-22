@@ -12,7 +12,7 @@ class Api::V1::AdminCreditCardsController < ApplicationController
   	user = User.new(nil, params[:user_id],  params[:user_name], nil, nil)
   	to_use_credit_card = ToUseCreditCard.find(params[:credit_card_id])
   	if to_use_credit_card.valid_use(params[:used_file], params[:amount])
-      to_use_credit_card.use(params[:amount], user, params[:used_file])
+      to_use_credit_card.use(params[:amount], user, params[:es_sale_id], params[:used_file])
       card_to_use = to_use_credit_card.to_json(
       	:include => { 
       		:bank => { :only => :name }, 

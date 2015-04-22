@@ -13,7 +13,8 @@ class ToUseCreditCard
   field :date_limit, type: Date
   field :allows_partial_use, type: Boolean, default: false
   field :clarification, type: String
-
+  field :email, type: String
+  
 
   #flags
   field :blocked, type: Boolean, default: false
@@ -138,8 +139,12 @@ class ToUseCreditCard
     update_attributes(blocked: false, taker_id: nil)
   end
 
-  def use(amount_to_use, user_data, file = nil, date = Date.today)
-    self.use_datas << UseData.new(amount: amount_to_use, used_file: file, user_id: user_data.id, user_name: user_data.name_and_surname)
+  def use(amount_to_use, user_data, es_sale_id = nil, file = nil, date = Date.today)
+    self.use_datas << UseData.new(amount: amount_to_use, 
+                                  used_file: file, 
+                                  user_id: user_data.id, 
+                                  user_name: user_data.name_and_surname,
+                                  es_sale_id: es_sale_id)
     self.save
     unless used_amount < self.amount
       update_attributes(used: true)

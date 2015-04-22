@@ -11,6 +11,7 @@
       <th>Agencia</th>
       <th>Por</th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
+      <th></th>
     </tr>
 
   </thead>
@@ -34,6 +35,8 @@
 
           </div>
         </td>
+        <td><%= link_to(("<i class='fa fa-hand-o-right fa-lg'></i>
+").html_safe, "http://10.0.0.82/es_sales/show/#{use.es_sale_id}", target: "_blank") unless use.es_sale_id.blank? %></td>
       </tr>
     <% end %>
   </tbody>

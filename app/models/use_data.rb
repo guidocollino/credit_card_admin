@@ -8,6 +8,8 @@ class UseData
   field :user_name, type: String
   field :used_file, type: Integer
   field :used_date, type: Date
+  #Guidux data
+  field :es_sale_id, type: Integer
 
   field :cancel, type: Boolean, default: false
 
