@@ -19,8 +19,8 @@
         <td><%= to_use_credit_card.complete_number_text %></td>
         <td><%= to_use_credit_card.expiration_text %></td>
         <td><%= to_use_credit_card.holder %></td>
-        <td><%= to_use_credit_card.bank.name %></td>
-        <td><%= to_use_credit_card.credit_card.name %></td>
+        <td><%= to_use_credit_card.bank_name %></td>
+        <td><%= to_use_credit_card.credit_card_name %></td>
         <td><%= number_with_precision(to_use_credit_card.amount, precision: 2, separator: '.', strip_insignificant_zeros: true) %></td>
         <td><%= to_use_credit_card.load_file %></td>
         <td><%= to_use_credit_card.creator_name %></td>

@@ -118,9 +118,7 @@
       <%= f.label :reason, :class => 'control-label' %>
       <%= select(:to_use_credit_card, :reason_id, @reasons, { include_blank: true }, :class => 'form-control') %>
     </div>
-    <div class="col-md-1">
-
-    </div>
+    <div class="col-md-1"></div>
   </div>
 
   <div class="control-group row">
@@ -144,7 +142,15 @@
         </div>
         <%= error_span(@to_use_credit_card[:allows_partial_use]) %>
       </div>
-    <div class="col-md-5"></div>
+
+    <div class="col-md-3">
+      <%= f.label :authorization_code, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :authorization_code, :class => 'form-control' %>
+      </div>
+      <%= error_span(@to_use_credit_card[:authorization_code]) %>
+    </div>
+    <div class="col-md-2"></div>
   </div>
 
  <div class="control-group row">

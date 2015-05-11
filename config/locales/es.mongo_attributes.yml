@@ -22,3 +22,4 @@ es:
         date_limit: "Fecha límite de uso"
         clarification: "Aclaración"
         email: "Mail"
+        authorization_code: "Cod. Autorización"

@@ -14,6 +14,7 @@ class ToUseCreditCard
   field :allows_partial_use, type: Boolean, default: false
   field :clarification, type: String
   field :email, type: String
+  field :authorization_code, type: String
   
 
   #flags
@@ -173,6 +174,18 @@ class ToUseCreditCard
 
   def enable(user)
     update_attributes(disabled: false, taker_id: user.id)
+  end
+
+  def bank_name
+    return bank.nil? ? "" : bank.name
+  end
+
+  def credit_card_name
+    return credit_card.nil? ? "" : credit_card.name
+  end
+
+  def authorized?
+    !self.authorization_code.blank?
   end
 
   ##################

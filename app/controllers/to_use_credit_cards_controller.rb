@@ -200,7 +200,7 @@ class ToUseCreditCardsController < ApplicationController
     def to_use_credit_card_params
       params.require(:to_use_credit_card).permit(:number, :expiration_month, :expiration_year,
         :security_code, :holder, :amount, :load_file, :blocked, :bank_id, :credit_card_id, :quotes, :agency_id,
-        :reason_id, :date_limit, :allows_partial_use, :clarification, :email)
+        :reason_id, :date_limit, :allows_partial_use, :clarification, :email,:authorization_code)
     end
 
     def set_banks_credit_cards_reasons
