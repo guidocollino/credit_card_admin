@@ -17,7 +17,8 @@ class Api::V1::AdminCreditCardsController < ApplicationController
       	:include => { 
       		:bank => { :only => :name }, 
       		:credit_card => { :only => :name } 
-      		})
+      		},
+          :methods => [:authorized])
       render json: { :card => ActiveSupport::JSON.decode(card_to_use), :use_amount =>  params[:amount]}, status: :ok
     else
       render json: {:errors => to_use_credit_card.errors.full_messages.join(" / ") }, status: '403'

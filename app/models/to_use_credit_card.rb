@@ -188,6 +188,11 @@ class ToUseCreditCard
     !self.authorization_code.blank?
   end
 
+  #PARA LA API(no funciona bien con el ?)
+  def authorized
+    !self.authorization_code.blank?
+  end
+
   ##################
   ## Agency Stuff ##
   ##################
