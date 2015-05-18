@@ -105,7 +105,7 @@ class ToUseCreditCard
   end
 
   def cant_use_amount
-    amount - used_amount
+    amount.to_f - used_amount.to_f
   end
 
   #Validaciones
