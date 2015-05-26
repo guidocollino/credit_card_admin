@@ -29,6 +29,8 @@ class ToUseCreditCard
 
   field :agency_id, type: Integer
 
+  field :consumer, type:String
+
   belongs_to :bank
   belongs_to :credit_card
   belongs_to :reason, class_name: "ReasonOfUse", foreign_key: "reason_id"

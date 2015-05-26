@@ -42,6 +42,13 @@ Tabulous.setup do
       active_when   { in_action('disabled_credit_cards').of_controller('to_use_credit_cards') }
     end
 
+    reports_tab do
+      text          {'Reportes'}
+      link_path     { credit_card_reports_to_use_credit_cards_path }
+      visible_when  { true }
+      enabled_when  { true }
+      active_when   { in_action('credit_card_reports').of_controller('to_use_credit_cards') }
+    end
   end
 
   customize do

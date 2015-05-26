@@ -7,8 +7,8 @@ class ToUseCreditCardsController < ApplicationController
   # GET /to_use_credit_cards
   # GET /to_use_credit_cards.json
   def index
-    @credit_cards = ToUseCreditCard.to_use.only(:id, :expiration_month, :expiration_year, :amount, :bank_id,
-      :credit_card_id, :quotes, :agency_id, :reason_id, :use_datas, :date_limit)
+    @credit_cards = ToUseCreditCard.to_use.only(:id, :number ,:expiration_month,  :expiration_year, :amount, :bank_id,
+      :credit_card_id, :quotes, :agency_id, :reason_id, :use_datas,:created_at, :date_limit)
     #@credit_cards = ToUseCreditCard.to_use
     @credit_cards = @credit_cards.sort_by! { |card| [card.reason.priority , card.expiration_year,  card.expiration_month, card.cant_use_amount] }
     @table_name = "to_use"
@@ -160,11 +160,11 @@ class ToUseCreditCardsController < ApplicationController
 
   #####################################################
 
-  def taked_credit_cards
-    @credit_cards = ToUseCreditCard.takeds(current_user.id)
-    @table_name = "taked"
-    render :index
-  end
+  # def taked_credit_cards
+  #   @credit_cards = ToUseCreditCard.takeds(current_user.id)
+  #   @table_name = "taked"
+  #   render :index
+  # end
 
   def used_credit_cards
     @uses = ToUseCreditCard.all_uses
@@ -190,6 +190,16 @@ class ToUseCreditCardsController < ApplicationController
     render :layout => false
   end
 
+   #Generate report for credit cards
+  def credit_card_reports
+    useCreditCards=ToUseCreditCard.where(used: :false) 
+    @reports=Statistic.new
+    useCreditCards.each do |obj|
+      @reports.add_agency_not_used(obj.agency_name, obj.cant_use_amount)
+    end 
+    render :report
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_to_use_credit_card
@@ -200,7 +210,7 @@ class ToUseCreditCardsController < ApplicationController
     def to_use_credit_card_params
       params.require(:to_use_credit_card).permit(:number, :expiration_month, :expiration_year,
         :security_code, :holder, :amount, :load_file, :blocked, :bank_id, :credit_card_id, :quotes, :agency_id,
-        :reason_id, :date_limit, :allows_partial_use, :clarification, :email,:authorization_code)
+        :reason_id, :date_limit, :allows_partial_use, :clarification, :email,:authorization_code, :consumer)
     end
 
     def set_banks_credit_cards_reasons

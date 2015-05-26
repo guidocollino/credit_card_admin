@@ -133,7 +133,7 @@
       <%= error_span(@to_use_credit_card[:date_limit]) %>
     </div>
 
-    <div class="col-md-5">
+    <div class="col-md-4">
       <%= f.label "Uso del monto", :class => 'control-label' %>
         <div class="controls inline">
             <%# f.check_box(:allows_partial_use , {}, checked_value = "true", unchecked_value = "false") %>
@@ -142,8 +142,13 @@
         </div>
         <%= error_span(@to_use_credit_card[:allows_partial_use]) %>
       </div>
-
-    <div class="col-md-3">
+    <div class="col-md-2">
+      <%= f.label :consumer, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :consumer, :class=> 'form-control'%>
+      </div>
+    </div>
+    <div class="col-md-2">
       <%= f.label :authorization_code, :class => 'control-label' %>
       <div class="controls">
         <%= f.text_field :authorization_code, :class => 'form-control' %>

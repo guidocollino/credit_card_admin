@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       get :all_credit_cards
       get :disabled_credit_cards
       post :use_credit_card
+      get :credit_card_reports
     end
   end
 
