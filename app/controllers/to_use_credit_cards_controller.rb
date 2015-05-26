@@ -201,7 +201,9 @@ class ToUseCreditCardsController < ApplicationController
     respond_to do |format|
         format.html {render :report }
         format.csv { send_data @reports.to_csv}
-        format.xls { render :report}
+        format.xls { 
+          response.headers['Content-Disposition'] = "attachment; filename=\"Reporte_Tarjetas_#{Date.today}.xls\""
+          render :report }
     end
     
   end
