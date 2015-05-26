@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:x="urn:schemas-microsoft-com:office:excel"
+xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+xmlns:html="http://www.w3.org/TR/REC-html40">
+<Worksheet ss:Name="Sheet1">
+  <Table>
+    <Row>
+      <Cell><Data ss:Type="String">Agencia</Data></Cell>
+      <Cell><Data ss:Type="String">Monto</Data></Cell>
+      <Cell><Data ss:Type="String">Cantidad de tarjetas</Data></Cell>
+    </Row>
+    <% @reports.collection.each_value do | agency | %>
+    <Row>
+      <Cell><Data ss:Type="String"><%= agency['agency'] %></Data></Cell>
+      <Cell><Data ss:Type="Number"><%= agency['amount'] %></Data></Cell>
+      <Cell><Data ss:Type="Number"><%= agency['total_cards_agency'] %></Data></Cell>
+    </Row>
+    <% end %>
+    <Row>
+    </Row>
+    <Row>
+      <Cell><Data ss:Type="String">Totales</Data></Cell>
+      <Cell><Data ss:Type="String"><%= @reports.amount_pending.to_s %></Data></Cell>
+      <Cell><Data ss:Type="String"><%= @reports.total_cards.to_s %></Data></Cell>
+    </Row>>
+</Table>
+</Worksheet>
+</Workbook>
+

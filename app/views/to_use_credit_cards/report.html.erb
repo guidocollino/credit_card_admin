@@ -1,31 +1,33 @@
 <%- model_class = ToUseCreditCard -%>
+
 <table class="table table-striped table-condensed datatable">
   <thead>
     <tr>
       <th><%= model_class.human_attribute_name(:agency) %></th>
       <th><%= model_class.human_attribute_name(:amount) %></th>
       <th><%= model_class.human_attribute_name(:credit_card) %></th>
+      <th><%= link_to "", credit_card_reports_to_use_credit_cards_path(format: "xls") ,:class=>"fa fa-file-excel-o fa-2x"%></th>
     </tr>
   </thead>
   <tbody>
     <% @reports.collection.each_value do | agency | %>
-      <tr>
-        <td><%= agency['agency'] %></td>
-        <td><%= number_with_precision(agency['amount'], precision: 2, separator: '.', strip_insignificant_zeros: true) %></td>
-        
-        <td><%= agency['total_cards_agency'] %></td>
-      </tr>
+    <tr>
+      <td><%= agency['agency'] %></td>
+      <td><%= number_with_precision(agency['amount'], precision: 2, separator: '.', strip_insignificant_zeros: true) %></td>
+
+      <td><%= agency['total_cards_agency'] %></td>
+      <td></td>
+    </tr>
     <% end %>
     <tr>
-    <td></td>
+      <td></td>
       <td><strong> Total pendiente:</strong>
         <%=number_with_precision(@reports.amount_pending, precision: 2, separator: '.', strip_insignificant_zeros: true) %>
       </td>
       <td><strong> Cantidad de tarjetas:</strong>
         <%= number_with_precision(@reports.total_cards, precision: 2, separator: '.', strip_insignificant_zeros: true) %>  
       </td>
+      <td></td>
     </tr>
   </tbody>
 </table>
-
-

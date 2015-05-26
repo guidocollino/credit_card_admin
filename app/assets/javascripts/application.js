@@ -58,8 +58,10 @@ $(document).ready(function() {
 				    "oAria": {
 				        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
 				        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-				    }
+				    }        
+
 				}
+
     });
  
     $("thead input").keyup(function() {
@@ -68,3 +70,4 @@ $(document).ready(function() {
         });
 
  } );
+

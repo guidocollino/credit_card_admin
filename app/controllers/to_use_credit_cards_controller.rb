@@ -197,7 +197,13 @@ class ToUseCreditCardsController < ApplicationController
     useCreditCards.each do |obj|
       @reports.add_agency_not_used(obj.agency_name, obj.cant_use_amount)
     end 
-    render :report
+    
+    respond_to do |format|
+        format.html {render :report }
+        format.csv { send_data @reports.to_csv}
+        format.xls { render :report}
+    end
+    
   end
 
   private
