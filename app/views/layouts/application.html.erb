@@ -27,6 +27,7 @@
           </ul>
 
           <a class="btn btn-info navbar-btn" href="<%= url_for new_to_use_credit_card_path %>">Agregar Tarjeta</a>
+          <a class="btn btn-default navbar-btn" title="Reporte en excel" href="<%= credit_card_reports_to_use_credit_cards_path(format: "xls") %>"><i class="fa fa-file-excel-o"></i></a>
           <p class="navbar-text navbar-right"><a href="#" class="navbar-link"><%= @current_user.name_and_surname %></a></p>
         </div>
 

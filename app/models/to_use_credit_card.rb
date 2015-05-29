@@ -53,6 +53,9 @@ class ToUseCreditCard
   #SINO MONGOID NO CARGA EL VALOR Y NO ANDAN BIEN LOS SCOPE
   after_create :initialize_flags
 
+  #Quita los espacios del numero de tarjeta
+  before_validation :delete_blank
+
   # def as_json(options={})
   #   super(
   #     {:include => [{ :bank => {:only => :name} , :reason => {:only => :name}}],
@@ -130,6 +133,11 @@ class ToUseCreditCard
       end
     end
     return valid
+  end
+
+  #Elimina los espacios del numero de tarjeta
+  def delete_blank
+    self.number=self.number.delete(' ')
   end
 
   #Eventos

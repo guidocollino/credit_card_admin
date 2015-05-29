@@ -69,5 +69,6 @@ $(document).ready(function() {
           table.fnFilter(this.value, $("#" + this.id).attr('index_column'));
         });
 
+
  } );
 

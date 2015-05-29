@@ -3,7 +3,7 @@ class ToUseCreditCardsController < ApplicationController
                                                 :free_credit_card, :use_form, :reuse_credit_card, :disable_credit_card,
                                                 :enable_credit_card]
   before_action :set_banks_credit_cards_reasons, only: [:new, :edit]
-
+  
   # GET /to_use_credit_cards
   # GET /to_use_credit_cards.json
   def index
@@ -226,4 +226,5 @@ class ToUseCreditCardsController < ApplicationController
       @credit_cards = CreditCard.all.map { |credit_card| [credit_card.name, credit_card.id] }
       @reasons = ReasonOfUse.all.map { |reason| [reason.name, reason.id] }
     end
+
 end
