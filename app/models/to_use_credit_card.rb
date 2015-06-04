@@ -40,6 +40,7 @@ class ToUseCreditCard
                          :bank, :credit_card, :quotes, :agency_id, :reason, :date_limit
   validates_numericality_of :number, :security_code, :load_file, only_integer: true
   validates_length_of :load_file, minimum: 6, maximum: 6
+  validates_numericality_of :amount , :message=> "debe ser un numero, utilizar el punto para separar la parte entera de la decimal   "
 
   scope :takeds, -> (taker_id) { enableds.not_used.where(blocked: true,taker_id: taker_id) }
   scope :to_use, -> {enableds.not_taked.not_used}
