@@ -1,5 +1,5 @@
 collection @credit_cards, :object_root => false
-attributes :id, :expiration_month, :amount, :expiration_year, :bank_id, :credit_card_id, :quotes, :agency_id, :reason_id, :use_datas, :date_limit, :clarification, :authorization_code
+attributes :id, :expiration_month, :amount, :expiration_year, :bank_id, :credit_card_id, :quotes, :agency_id, :reason_id, :use_datas, :date_limit, :clarification, :authorization_code, :consumer
 child(:reason) { attributes :name }
 node(:bank) { |cc| cc.bank_name }
 node(:expiration_text) { |cc| cc.expiration_text }

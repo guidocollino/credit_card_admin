@@ -4,7 +4,7 @@ class Api::V1::AdminCreditCardsController < ApplicationController
 
   def to_use_credit_cards
   	@credit_cards = ToUseCreditCard.to_use.only(:id, :expiration_month, :expiration_year, :amount, :bank_id, 
-      :credit_card_id, :quotes, :agency_id, :reason_id, :use_datas, :date_limit, :clarification, :authorization_code)
+      :credit_card_id, :quotes, :agency_id, :reason_id, :use_datas, :date_limit, :clarification, :authorization_code, :consumer)
   	@credit_cards = @credit_cards.sort_by! { |card| [card.reason.priority , card.expiration_year,  card.expiration_month, card.cant_use_amount] }
   end
 
