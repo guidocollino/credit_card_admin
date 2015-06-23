@@ -69,8 +69,8 @@
 
   <div class="control-group row">
     <div class="col-md-2">
-      <%= f.label :bank, :class => 'control-label' %>
-      <%= select(:to_use_credit_card, :bank_id, @banks, { include_blank: true }, :class => 'form-control') %>
+      <%= f.label :bank_id, :class => 'control-label' %>
+      <%= select_banks(f) %>
     </div>
     <div class="col-md-2">
       <%= f.label :credit_card, :class => 'control-label' %>

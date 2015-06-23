@@ -1,0 +1,6 @@
+      invoke  active_record
+      create    db/migrate/20150610154300_create_use_data.rb
+      create    app/models/use_data.rb
+      invoke    test_unit
+      create      test/models/use_data_test.rb
+      create      test/fixtures/use_data.yml

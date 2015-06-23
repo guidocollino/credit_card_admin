@@ -24,6 +24,9 @@ Rails.application.routes.draw do
   get ':controller/:action(/:id)'
 
   get '/logout' => 'application#logout'
+  
+  # Permite ver los estados de las distintas colas(resque)
+  mount Resque::Server, :at => "/resque"  
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

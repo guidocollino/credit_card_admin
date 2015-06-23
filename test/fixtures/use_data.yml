@@ -3,7 +3,21 @@
 one:
   amount: 
   user_id: 1
+  user_name: MyString
+  used_file: 1
+  used_date: 2015-06-10
+  es_sale_id: 1
+  cancel: 
+  default: MyString
+  =: MyString
 
 two:
   amount: 
   user_id: 1
+  user_name: MyString
+  used_file: 1
+  used_date: 2015-06-10
+  es_sale_id: 1
+  cancel: 
+  default: MyString
+  =: MyString

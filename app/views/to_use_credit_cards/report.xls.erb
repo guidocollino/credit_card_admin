@@ -11,10 +11,10 @@ xmlns:html="http://www.w3.org/TR/REC-html40">
       <Cell><Data ss:Type="String">Monto</Data></Cell>
       <Cell><Data ss:Type="String">Cantidad de tarjetas</Data></Cell>
     </Row>
-    <% @reports.collection.each_value do | agency | %>
+    <% @reports.collection.each_value.sort_by{|d| d['amount']}.reverse_each do |agency| %>
     <Row>
       <Cell><Data ss:Type="String"><%= agency['agency'] %></Data></Cell>
-      <Cell><Data ss:Type="Number"><%= agency['amount'] %></Data></Cell>
+      <Cell><Data ss:Type="Float"><%= number_to_currency( agency['amount'] , precision: 2, separator: ",", delimiter: ".", strip_insignificant_zeros: true ) %></Data></Cell>
       <Cell><Data ss:Type="Number"><%= agency['total_cards_agency'] %></Data></Cell>
     </Row>
     <% end %>
@@ -22,8 +22,8 @@ xmlns:html="http://www.w3.org/TR/REC-html40">
     </Row>
     <Row>
       <Cell><Data ss:Type="String">Totales</Data></Cell>
-      <Cell><Data ss:Type="String"><%= @reports.amount_pending.to_s %></Data></Cell>
-      <Cell><Data ss:Type="String"><%= @reports.total_cards.to_s %></Data></Cell>
+      <Cell><Data ss:Type="Float"><%= number_to_currency( @reports.amount_pending , precision: 2, separator: ",", delimiter: ".",strip_insignificant_zeros: true) %></Data></Cell>
+      <Cell><Data ss:Type="Number"><%= @reports.total_cards.to_s %></Data></Cell>
     </Row>>
 </Table>
 </Worksheet>

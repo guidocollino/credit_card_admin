@@ -1,14 +1,5 @@
-class CreditCard
-  include Mongoid::Document
-  include Mongoid::Timestamps
-  #store_in collection: "credit_cards", database: "promotions_development", session: "promotions"
-  store_in session: "promotions"
-  
-  field :name, type: String
-  field :quantity_digits, type: Integer
-  field :bin_start, type: Integer
-  field :quantity_code_security, type: Integer
-
-  attr_readonly :name, :quantity_digits, :bin_start, :quantity_code_security
-
+class CreditCard < ActiveResource::Base
+  cached_resource :ttl => 3600#La cache expira cada un dia
+    #self.site = "http://localhost:5555/api/v1"
+    self.site = "http://localhost:3002/api/v1"
 end

@@ -1,0 +1,24 @@
+<table style="width:100%" frame="border" border="1">
+  <tr>
+    <th bgcolor="#6495ED" ><strong style= "color:white"> Agencia</strong></th>
+    <th bgcolor="#6495ED" ><strong style= "color:white"> Monto</strong></th> 
+    <th bgcolor="#6495ED" ><strong style= "color:white">Cantidad de tarjetas</strong></th>
+  </tr>
+ <% @reports.collection.each_value.sort_by{|d| d['amount']}.reverse_each do |agency| %>
+  <tr>
+    <td > <font style= "color:black" > <%= agency['agency'] %> </font> </td>
+    <td > <font style= "color:black" ><%= number_to_currency( agency['amount'] , precision: 2, separator: ",", delimiter: ".", strip_insignificant_zeros: true ) %></font> </td> 
+    <td > <font style= "color:black" ><%= agency['total_cards_agency']%></font> </td>
+  </tr>
+  <% end %>
+  <tr>
+    <td >&nbsp;</td>
+    <td >&nbsp;</td>
+    <td >&nbsp;</td> 
+  </tr>
+  <tr>
+    <td > <strong style= "color:black">Totales</strong></td>
+    <td ><strong style= "color:black"><%= number_to_currency( @reports.amount_pending.to_s , precision: 2, separator: ",", delimiter: ".", strip_insignificant_zeros: true) %> </strong> </td>
+    <td ><strong style= "color:black"><%= @reports.total_cards.to_s %> </strong> </td>
+  </tr>
+</table>

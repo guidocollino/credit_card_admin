@@ -1,5 +1,5 @@
 es:
-  mongoid:
+  activerecord:
     models:
       to_use_credit_card: "Tarjetas de Crédito"
     attributes:

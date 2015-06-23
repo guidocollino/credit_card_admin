@@ -15,8 +15,6 @@ gem 'twitter-bootstrap-rails'
 gem 'select2-rails'
 #gem 'bootstrap-datepicker-rails'
 
-gem 'mongoid'
-gem 'mongoid-tree', '~> 2.0.0'
 
 # Use mysql2 as the database for Active Record
 gem 'mysql2', '~> 0.3.16'
@@ -58,6 +56,13 @@ gem 'rubycas-client'
 
 gem 'aero_agency_client', path: './custom_gems/aero_agency_client_gem'
 
+gem 'activeresource', :require => 'active_resource'
+gem 'cached_resource'
+
+# Ejecutar una tarea cada cierta frecuencia
+gem 'whenever', :require => false
+#Encolar tareas y ejecutarlas en background
+gem "resque" , :require => 'resque/server'
 
 #gem 'client_side_validations'
 #gem 'client_side_validations-mongoid'

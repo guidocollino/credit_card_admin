@@ -1,21 +1,75 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  number: 
-  expiration_month: 
-  expiration_year: 
-  security_code: 
-  holder: 
+  number: MyString
+  expiration_month: MyString
+  expiration_year: MyString
+  security_code: MyString
+  holder: MyString
   amount: 
-  load_file: 
+  quotes: 1
+  load_file: 1
+  date_limit: 2015-06-10
+  allows_partial_use: false
+  ,default: MyString
+  =: MyString
+  clarification: MyString
+  email: MyString
+  authorization_code: MyString
   blocked: 
+  default: MyString
+  =: MyString
+  partial_used: 
+  default: MyString
+  =: MyString
+  used: false
+  ,default: MyString
+  =: MyString
+  disabled: 
+  default: MyString
+  =: MyString
+  creator_id: 1
+  creator_name: MyString
+  taker_id: 1
+  agency_id: 1
+  consumer: MyString
+  bank_id: 1
+  credit_card_id: 1
+  reason_id: 1
 
 two:
-  number: 
-  expiration_month: 
-  expiration_year: 
-  security_code: 
-  holder: 
+  number: MyString
+  expiration_month: MyString
+  expiration_year: MyString
+  security_code: MyString
+  holder: MyString
   amount: 
-  load_file: 
+  quotes: 1
+  load_file: 1
+  date_limit: 2015-06-10
+  allows_partial_use: false
+  ,default: MyString
+  =: MyString
+  clarification: MyString
+  email: MyString
+  authorization_code: MyString
   blocked: 
+  default: MyString
+  =: MyString
+  partial_used: 
+  default: MyString
+  =: MyString
+  used: false
+  ,default: MyString
+  =: MyString
+  disabled: 
+  default: MyString
+  =: MyString
+  creator_id: 1
+  creator_name: MyString
+  taker_id: 1
+  agency_id: 1
+  consumer: MyString
+  bank_id: 1
+  credit_card_id: 1
+  reason_id: 1

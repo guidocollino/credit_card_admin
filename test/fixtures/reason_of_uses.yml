@@ -3,7 +3,9 @@
 one:
   name: MyString
   priority: 1
+  description: MyString
 
 two:
   name: MyString
   priority: 1
+  description: MyString

@@ -1,5 +1,4 @@
 class Statistic
-  include Mongoid::Document
   attr_accessor :collection
   
   #Statistics of cards available to use

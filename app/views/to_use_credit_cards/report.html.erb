@@ -10,10 +10,11 @@
     </tr>
   </thead>
   <tbody>
-    <% @reports.collection.each_value do | agency | %>
+  <% @reports.collection.each_value.sort_by{|d| d['amount']}.reverse_each do |agency| %>
+    
     <tr>
       <td><%= agency['agency'] %></td>
-      <td><%= number_with_precision(agency['amount'], precision: 2, separator: '.', strip_insignificant_zeros: true) %></td>
+      <td><%= number_to_currency(agency['amount'], precision: 2, separator: ",", delimiter: ".", strip_insignificant_zeros: true) %></td>
 
       <td><%= agency['total_cards_agency'] %></td>
       <td></td>
@@ -22,10 +23,10 @@
     <tr>
       <td></td>
       <td><strong> Total pendiente:</strong>
-        <%=number_with_precision(@reports.amount_pending, precision: 2, separator: '.', strip_insignificant_zeros: true) %>
+        <%=number_to_currency(@reports.amount_pending, precision: 2, eparator: ",", delimiter: ".", strip_insignificant_zeros: true) %>
       </td>
       <td><strong> Cantidad de tarjetas:</strong>
-        <%= number_with_precision(@reports.total_cards, precision: 2, separator: '.', strip_insignificant_zeros: true) %>  
+        <%= @reports.total_cards %>  
       </td>
       
     </tr>
