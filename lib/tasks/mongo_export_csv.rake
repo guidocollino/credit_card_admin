@@ -19,12 +19,12 @@ namespace :mongo_export_csv do
   end
 
   task :use_data => :environment do
-    headers = ['mongo_id', 'to_use_credit_card_id', 'amount', 'user_id' , 'user_name', 'used_file' , 'used_date' , 'es_sale_id' , 'cancel' , 'created_at' , 'updated_at'] 
+    headers = ['mongo_id', 'to_use_credit_card_id', 'credit_card_mongodb_id' , 'amount', 'user_id' , 'user_name', 'used_file' , 'used_date' , 'es_sale_id' , 'cancel' , 'created_at' , 'updated_at'] 
     CSV.open('db/use_data.csv', 'wb') do |csv|
       csv <<  headers
       ToUseCreditCard.all.each do |card|
         card.use_datas.each do |use| 
-          csv << [use.id, card.id, use.amount, use.user_id , use.user_name, use.used_file , use.used_date , use.es_sale_id, use.cancel , use.created_at, use.updated_at ] 
+          csv << [use.id, 0,card.id ,use.amount, use.user_id , use.user_name, use.used_file , use.used_date , use.es_sale_id, use.cancel , use.created_at, use.updated_at ] 
         end
       end
     end
