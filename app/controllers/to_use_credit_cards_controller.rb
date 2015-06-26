@@ -17,7 +17,7 @@ class ToUseCreditCardsController < ApplicationController
   # GET /to_use_credit_cards/1.json
   def show
   end
- 
+
   # GET /to_use_credit_cards/new
   def new
     @to_use_credit_card = ToUseCreditCard.new
@@ -189,23 +189,23 @@ class ToUseCreditCardsController < ApplicationController
     render :layout => false
   end
 
+
    #Generate report for credit cards
-   def credit_card_reports
-    useCreditCards=ToUseCreditCard.where(used: :false) 
-    @reports=Statistic.new
-    useCreditCards.each do |obj|
-      @reports.add_agency_not_used(obj.agency_name, obj.cant_use_amount)
-    end 
-    
+  def credit_card_reports
+    @reports=ToUseCreditCard.report_credit_card_to_use
     respond_to do |format|
       format.html {render :report }
       format.csv { send_data @reports.to_csv}
       format.xls { 
         response.headers['Content-Disposition'] = "attachment; filename=\"Reporte_Tarjetas_#{Date.today}.xls\""
         render :report }
-      end
-
     end
+  end
+
+  def credit_card_report_expiration
+    @reports = ToUseCreditCard.report_credit_card_expiration
+    @reports
+  end
 
     private
     # Use callbacks to share common setup or constraints between actions.

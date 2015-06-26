@@ -18,8 +18,14 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
+# env 'PATH', ENV['PATH']
 set :environment, "development"
 
 every 1.minutes do
-  rake 'send_email:report'
+  
+  rake "send_email:report"
+end
+
+every 1.day, :at => '7:00 am' do
+  rake "send_email:report_cards_expiration"
 end

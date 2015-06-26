@@ -3,8 +3,9 @@ class Api::V1::AdminCreditCardsController < ApplicationController
   skip_before_filter  :verify_authenticity_token
 
   def to_use_credit_cards
-  	@credit_cards = ToUseCreditCard.to_use.only(:id, :expiration_month, :expiration_year, :amount, :bank_id, 
-      :credit_card_id, :quotes, :agency_id, :reason_id, :use_datas, :date_limit, :clarification, :authorization_code, :consumer)
+  	@credit_cards = ToUseCreditCard.select(:id, :expiration_month, :expiration_year, :amount, :bank_id, 
+      :credit_card_id, :quotes, :agency_id, :reason_id, :date_limit, :clarification, :authorization_code, :consumer).includes(:use_datas,:reason).to_use
+    @credit_cards = @credit_cards.to_a
   	@credit_cards = @credit_cards.sort_by! { |card| [card.reason.priority , card.expiration_year,  card.expiration_month, card.cant_use_amount] }
   end
 

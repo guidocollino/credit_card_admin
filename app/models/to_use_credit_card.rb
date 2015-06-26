@@ -1,6 +1,8 @@
 class ToUseCreditCard < ActiveRecord::Base
  # belongs_to :bank
  # belongs_to :credit_card
+ include Comparable
+
  belongs_to :reason, class_name: "ReasonOfUse", foreign_key: "reason_id"
  has_many :use_datas
 
@@ -92,6 +94,27 @@ class ToUseCreditCard < ActiveRecord::Base
 
   def cant_use_amount
     amount.to_f - used_amount.to_f
+  end
+
+  #Reportes
+  def self.report_credit_card_to_use
+    use_credit_cards = ToUseCreditCard.where(used: :false) 
+    reports       = Statistic.new
+    use_credit_cards.each do |obj|
+      reports.add_agency_not_used(obj.agency_name, obj.cant_use_amount)
+    end
+    reports 
+  end
+
+  def self.report_credit_card_expiration
+    reports =[]
+    use_credit_cards = ToUseCreditCard.where(used: :false)
+    use_credit_cards.each do | card | 
+      if card.date_limit.between?(Date.today, Date.today + 2.day) || ((Date.new(card.expiration_year.to_i, card.expiration_month.to_i, 1)) + 1.month).between?(Date.today, Date.today + 2.day)
+        reports << card  
+      end
+    end 
+    reports
   end
 #Validaciones
 
